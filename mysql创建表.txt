@@ -1,0 +1,155 @@
+CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '用户id',
+  `user_name` varchar(255) NOT NULL COMMENT '用户名',
+  `user_mobile` varchar(255) NOT NULL COMMENT '手机号',
+  `user_email` varchar(255)  COMMENT '邮箱',
+  `user_password` varchar(255) NOT NULL COMMENT '账号密码',
+  `user_role` int NOT NULL COMMENT '用户身份： 1：测试，2：后端  ，3：前端，4：产品，5：PM',
+  `status` int NOT NULL COMMENT '账号状态： 0  正常，1 停用',
+  `create_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `iterations` (
+  `id` int(8) NOT NULL AUTO_INCREMENT COMMENT '迭代表id',
+  `iteration_group_id` int(2) NOT NULL COMMENT '迭代小组id',
+  `iteration_version` varchar(255) NOT NULL COMMENT '迭代版本',
+  `user_id` int(8) NOT NULL COMMENT '创建人',
+  `is_delete` int(1) NOT NULL COMMENT '数据状态： 0  正常，1 删除',
+  `create_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `iteration_groups` (
+  `id` int(4) NOT NULL AUTO_INCREMENT COMMENT '迭代小组id',
+  `iteration_group_name` varchar(255) NOT NULL COMMENT '迭代小组名称',
+  `user_id` int(8) NOT NULL COMMENT '创建人id',
+  `is_delete` int(1) NOT NULL DEFAULT 0 COMMENT '状态： 0  正常，1 停用',
+  `create_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `iterations` (
+  `id` int(8) NOT NULL AUTO_INCREMENT COMMENT '迭代表id',
+  `iteration_group_id` int(2) NOT NULL COMMENT '迭代小组id',
+  `iteration_version` varchar(255) NOT NULL COMMENT '迭代版本',
+  `user_id` int(8) NOT NULL COMMENT '创建人',
+  `is_delete` int(1) NOT NULL COMMENT '数据状态： 0  正常，1 删除',
+  `create_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+ CREATE TABLE `iteration_submit_records` (
+  `id` int(8) NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `iteration_group_id` int(4) NOT NULL COMMENT '迭代小组id',
+  `itetation_version_id` int(8) NOT NULL COMMENT '需求版本id',
+  `iteration_story_id` int(8) NOT NULL COMMENT '迭代需求storyid',
+  `iteration_story_type` varchar(255) NOT NULL COMMENT '迭代需求提交类型: APP,web,后端',
+  `iteration_story_content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '迭代需求内容',
+  `unittest_status` varchar(64) NOT NULL COMMENT '单元测试状态: 无，通过',
+  `iteration_mysql` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'mysql工单状态: 无, 已执行，未执行',
+  `develop_person` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '参与研发人员',
+  `iteration_effect` varchar(255) DEFAULT NULL COMMENT '迭代影响范围',
+  `mark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `user_id` int(4) NOT NULL COMMENT '提测人id',
+  `smoke_result` int unsigned DEFAULT '2' COMMENT '冒烟结果 0:通过  ，1:不通过, 2:待冒烟',
+  `smoke_mark` varchar(255) DEFAULT NULL COMMENT '冒烟说明',
+  `test_smoke_user_id` int DEFAULT NULL COMMENT '冒烟测试人员',
+  `is_delete` int NOT NULL DEFAULT '0' COMMENT '状态： 0  正常，1 停用',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+ CREATE TABLE `iteration_change_records` (
+  `id` int(8) NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `iteration_group_id` int(4) NOT NULL COMMENT '迭代小组id',
+  `itetation_version_id` int(8) NOT NULL COMMENT '需求版本id',
+  `iteration_story_id` int(8) NOT NULL COMMENT '迭代需求storyid',
+  `iteration_story_type` varchar(255) NOT NULL COMMENT '更改影响端: APP,web,后端',
+  `iteration_story_change_content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '需求更改内容',
+  `iteration_change_effect` varchar(255) DEFAULT NULL COMMENT '更改影响范围',
+  `develop_person` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '参与研发人员',
+  `mark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `user_id` int(4) NOT NULL COMMENT '变更记录人id',
+  `change_status` int NOT NULL DEFAULT '1' COMMENT '状态： 0  已确认，1 待确认',
+  `is_delete` int NOT NULL DEFAULT '0' COMMENT '状态： 0  正常，1 停用',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+ CREATE TABLE `system_url_manage` (
+  `id` int(8) NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `system_name` varchar(50) NOT NULL COMMENT '系统名',
+  `system_url` varchar(50) NOT NULL COMMENT '系统url地址',
+  `system_env` varchar(20) NOT NULL COMMENT '系统环境:T,PRE,PRO ',
+  `system_organization_id` varchar(20) DEFAULT NULL COMMENT '如果是学习平台，则对应机构id',
+	`system_organization_name` varchar(50) DEFAULT NULL COMMENT '如果是学习平台，则对应机构名称',
+  `user_id` int(4) NOT NULL COMMENT '添加人id',
+  `mark` varchar(255) DEFAULT NULL COMMENT '备注', 
+  `is_delete` int NOT NULL DEFAULT '0' COMMENT '状态： 0  正常，1 停用',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `city_month_house_info` (
+	`id` INT ( 8 ) NOT NULL AUTO_INCREMENT COMMENT '自增id',
+	`city_id` int ( 4 ) NOT NULL COMMENT '城市id',
+	`area_id` int ( 6 ) NOT NULL COMMENT '县，区id',
+	`house_count` int ( 4 ) NOT NULL COMMENT '数量',
+	`house_type` int ( 4 ) NOT NULL DEFAULT '1' COMMENT '房屋类型:1住宅，2商业,3办公，4其他',
+	`reocrd_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录时间',
+	`is_delete` INT NOT NULL DEFAULT '0' COMMENT '状态： 0  正常，1 停用',
+	`create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+	`update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+PRIMARY KEY ( `id` ) 
+) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `citys` (
+	`id` INT ( 8 ) NOT NULL AUTO_INCREMENT COMMENT '自增id',
+	`city_name` varchar ( 64 ) NOT NULL COMMENT '城市名称',
+	`is_delete` INT NOT NULL DEFAULT '0' COMMENT '状态： 0  正常，1 停用',
+	`create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+	`update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+PRIMARY KEY ( `id` ) 
+) ENGINE = INNODB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+
+
+
+CREATE TABLE `feedback_records` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `title` varchar(255) NOT NULL COMMENT '标题',
+  `description` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '问题描述',
+  `platform` varchar(8) NOT NULL COMMENT '平台:APP,web,业务工作台，机构工作台',
+  `feedback_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0新增，4挂起，1处理中，2已解决',
+  `important_level` varchar(10) NOT NULL COMMENT '重要性',
+  `feedback_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '反馈时间',
+  `agency_type` varchar(10) NOT NULL COMMENT '机构类型',
+  `feedback_user` varchar(64) NOT NULL COMMENT '反馈人',
+  `feedback_classify` tinyint(1) NOT NULL COMMENT '问题归类:1技术，2产品, 3业务/运营，5其他',
+  `feedback_deal_type` varchar(10) NOT NULL COMMENT '处理类型:咨询，数据，bug,需求，建议，查询',
+  `iteration_group_id` int NOT NULL COMMENT '所属迭代团队',
+  `function_module` varchar(255) NOT NULL COMMENT '反馈所属功能模块',
+  `feedback_deal_user` varchar(10) DEFAULT NULL COMMENT '处理人',
+  `analysis_reason` varchar(255) DEFAULT NULL COMMENT '原因分析',
+  `influence` varchar(255) DEFAULT NULL COMMENT '影响范围',
+  `user_id` int NOT NULL COMMENT '创建人id',
+  `complete_time` datetime DEFAULT NULL COMMENT '解决时间',
+  `mark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `is_delete` int NOT NULL DEFAULT '0' COMMENT '状态： 0  正常，1 停用',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
