@@ -7,7 +7,7 @@ PERMANENT_SESSION_LIFETIME = timedelta(days=7)
 # 邮箱信息
 mail_host = "smtp.163.com"
 mail_user = "yangchenguang1011@163.com"
-mail_pwd = "FIJWZPBMFCIUFSVJ"
+mail_pwd = ""
 sender = "yangchenguang1011@163.com"
 listener = ["yangchenguang@gaodun.com"]
 # 数据库信息
