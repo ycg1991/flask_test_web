@@ -1,8 +1,7 @@
 import os
 from datetime import timedelta
 import pymysql
-SECRET_KEY = os.urandom(24)
-PERMANENT_SESSION_LIFETIME = timedelta(days=7)
+
 
 # 邮箱信息
 mail_host = "smtp.163.com"
